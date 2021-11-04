@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
+
+import { postAdded } from "./postsSlice";
 
 export const AddPostForm = () => {
     const [title, setTitle] = useState("");
@@ -6,8 +10,25 @@ export const AddPostForm = () => {
     // Why UseState and not put that in store? =>
     // "Global state should go in the Redux store, local state should stay in React components"
 
+    const dispatch = useDispatch();
+
     const onTitleChanged = (e) => setTitle(e.target.value);
     const onContentChanged = (e) => setContent(e.target.value);
+
+    const onSavePostClicked = () => {
+        if (title && content) {
+            dispatch(
+                postAdded({
+                    id: nanoid(), // generates a random unique ID
+                    title,
+                    content,
+                })
+            );
+
+            setTitle("");
+            setContent("");
+        }
+    };
 
     return (
         <section>
@@ -28,7 +49,9 @@ export const AddPostForm = () => {
                     value={content}
                     onChange={onContentChanged}
                 />
-                <button type="button">Save Post</button>
+                <button type="button" onClick={onSavePostClicked}>
+                    Save Post
+                </button>
             </form>
         </section>
     );
