@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { PostAuthor } from "./postAuthor";
 import { TimeAgo } from "./timeAgo";
+import { selectAllPosts } from "./postsSlice";
 
 // React components can read data from the Redux store using the useSelector hook from the React-Redux library.
 // The "selector functions" that you write will be called with the entire Redux state object as a parameter, and should return the specific data that this component needs from the store.
 
 export const PostsList = () => {
-    const posts = useSelector((state) => state.posts);
+    const posts = useSelector(selectAllPosts);
 
     const orderedPosts = posts
         .slice()

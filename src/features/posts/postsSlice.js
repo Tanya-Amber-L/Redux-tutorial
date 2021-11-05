@@ -56,3 +56,8 @@ export const { postAdded, postUpdated } = postsSlice.actions;
 // We can export that action creator and use it in our UI components to dispatch the action when the user clicks "Save Post".
 
 export default postsSlice.reducer;
+
+export const selectAllPosts = (state) => state.posts;
+
+export const selectPostById = (state, postId) =>
+    state.posts.find((post) => post.id === postId);
